@@ -1,0 +1,49 @@
+buildscript {
+    ext {
+        versions = [
+                'Java': '11',
+                // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot
+                'SpringBoot': '2.5.2',
+                // PostgreSQL: https://mvnrepository.com/artifact/org.postgresql/postgresql
+                'PostgreSQL': '42.3.1',
+                // https://mvnrepository.com/artifact/org.projectlombok/lombok
+                'lombok': '1.18.20',
+                // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
+                'log4j2': '2.17.1',
+        ]
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${versions.SpringBoot}"
+    }
+}
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'java'
+
+group = 'jp.taira'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = "${versions.Java}"
+
+repositories {
+    mavenCentral()
+}
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
+dependencies {
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter'
+
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+}
+
+test {
+    useJUnitPlatform()
+}

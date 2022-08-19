@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: sample_app
+    build:
+      context: ./docker/app
+    privileged: true
+    tty: true
+    command: ./gradlew clean bootRun
+    volumes:
+      - ./:/app:delegated
+    networks:
+      - sample_network
+    ports:
+      - "10081:8080"
+  db:
+    image: postgres:14.1
+    container_name: sample_db
+    privileged: true
+    environment:
+      POSTGRES_ROOT_PASSWORD: postgres
+      POSTGRES_DB: sample
+      POSTGRES_USER: sample
+      POSTGRES_PASSWORD: sample_password
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=C"
+    volumes:
+      - ./docker/db/data:/var/lib/postgresql:delegated
+      - ./docker/db/postgresql.conf:/etc/postgresql/conf.d/postgresql.conf:delegated
+      - ./docker/db/init/01-init.sql:/docker-entrypoint-initdb.d/init.sql:delegated
+    networks:
+      - sample_network
+    ports:
+      - "5433:5432"
+networks:
+  sample_network:
+    driver: "bridge"
