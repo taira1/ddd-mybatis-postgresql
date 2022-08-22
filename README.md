@@ -1,1 +1,1 @@
-# ddd-dao-postgresql
+# ddd-mybatis-postgresql
