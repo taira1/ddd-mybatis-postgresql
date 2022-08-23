@@ -98,8 +98,8 @@ public class SAMPLEController extends BaseController implements SsampleApi {
             produces = {"application/json"}
     )
     public ResponseEntity<SampleInformationResponse> sMPLEG(
-            @NotNull @ApiParam(value = "画面.秘書番号", required = true)
-            @Valid @RequestParam(value = "psNumber") String psNumber) {
+            @NotNull @ApiParam(value = "画面.サンプル番号", required = true)
+            @Valid @RequestParam(value = "sampleNumber") String sampleNumber) {
         // 略
     }
 }
